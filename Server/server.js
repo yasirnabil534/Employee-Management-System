@@ -7,7 +7,7 @@ const app = express();
 const port = process.env.PORT || 5100;
 
 // * MongoDB connection function
-const connsctDB = async () => {
+const connectDB = async () => {
     try {
         await mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
         console.log('Connected to server');
@@ -27,6 +27,12 @@ app.get('/', (req, res) => {
         res.status(500).json({ mesage: 'Connections are not established' });
     }
 });
+
+// ~ Router API for auth controller
+app.use('/auth', require('./src/routers/authController'));
+
+// ~ Router API for user controller
+app.use('/users', require('./src/routers/userController'));
 
 // * Server listening port functionality
 app.listen(port, async () => {
