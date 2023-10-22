@@ -19,6 +19,9 @@ const createUser = async (req, res) => {
                 rawPassword: req?.body?.password,
                 type: req?.body?.type,
                 position: req?.body?.position,
+                phone: req?.body?.phone,
+                address: req?.body?.address,
+                department: req?.body?.department,
             };
             const user = await new User(userObj);
             await user.save();
