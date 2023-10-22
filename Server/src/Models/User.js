@@ -9,6 +9,11 @@ const userSchema = mongoose.Schema(
         rawPassword: String, // It is kept cause it is hard to remember multiple random passwords
         age: Number,
         position: String,
+        phone: String,
+        image: {
+            type: mongoose.Types.ObjectId,
+            ref: 'FIle',
+        },
         address: String,
         type: {
             type: String,
