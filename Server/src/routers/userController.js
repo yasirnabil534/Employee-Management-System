@@ -5,7 +5,11 @@ const { userAPI } = require('../utils/apiEndpoints');
 const {
     createUser,
     getUsers,
+    getUserByID,
+    updateUserByID,
+    deleteUserByID,
 } = require('../services/userService');
+const { authenticateToken } = require('../middlewares/tokenAuthenticator');
 
 // ? API to sign in
 router.post(
@@ -23,6 +27,15 @@ router.post(
 );
 
 // ? API to get all users
-router.get(userAPI.GET_ALL, getUsers);
+router.get(userAPI.ALL, authenticateToken, getUsers);
+
+// ? API to get user by ID
+router.get(userAPI.USER_BY_ID, authenticateToken, getUserByID);
+
+// ? API to update user by ID
+router.put(userAPI.USER_BY_ID, authenticateToken, updateUserByID);
+
+// ? API to delete user by ID
+router.delete(userAPI.USER_BY_ID, authenticateToken, deleteUserByID);
 
 module.exports = router;

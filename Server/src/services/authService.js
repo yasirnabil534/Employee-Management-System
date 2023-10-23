@@ -16,7 +16,7 @@ const emailLogin = async (email, password, res) => {
             if (!isValid) {
                 res.status(401).json({ message: 'Password does not match' });
             } else {
-                const accessToken = generateToken({ email, id: user._id.toString()}, '1d');
+                const accessToken = generateToken({ email, id: user._id.toString(), type: user.type}, '1d');
                 const refreshToken = generateToken({ id: user._id.toString() }, '6d');
                 res.status(200).json({ message: 'Login successfull', user, accessToken, refreshToken });
             }
@@ -59,6 +59,11 @@ const login = async (req, res) => {
         } else {
             const { email, password, type } = req.body;
             if (type === loginType.EMAIL) {
+                if (!email) {
+                    res.status(404).json({ message: 'Email not found' });
+                } else if (!password) {
+                    res.status(403).json({ message: 'Password need to be provided' });
+                }
                 await emailLogin(email, password, res);
             } else if (type === loginType.REFRESH) {
                 await tokenLogin(req?.body?.refreshToken, res);
@@ -71,4 +76,4 @@ const login = async (req, res) => {
 
 module.exports = {
     login,
-}
+};
