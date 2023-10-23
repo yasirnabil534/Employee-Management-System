@@ -10,4 +10,5 @@ const userType = {
 
 module.exports = {
     loginType,
+    userType,
 }

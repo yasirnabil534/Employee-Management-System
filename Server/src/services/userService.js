@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator');
 const User = require('../Models/User');
 const { hashPassword } = require('../common/managePass');
+const { userType } = require('../utils/enums');
 
 // * Function to create an user
 const createUser = async (req, res) => {
@@ -51,7 +52,67 @@ const getUsers = async (req, res) => {
     }
 };
 
+// * Function to find user by id
+const getUserByID = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await User.findById(id);
+        if (!user) {
+            res.status(404).json({ message: 'User not found' });
+        } else {
+            res.status(200).json({ user });
+        }
+    } catch (err) {
+        res.status(500).json({ message: 'Something went wrong ' });
+    }
+};
+
+// * Function to update user by ID
+const updateUserByID = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await User.findById(id);
+        if (!user) {
+            res.status(404).json({ message: 'User not found' });
+        } else if (req?.user?.type !== userType.ADMIN) {
+            res.status(403).json({ message: 'You need to be ADMIN' });
+        } else {
+            const updateUser = await User.findByIdAndUpdate(id, req.body, { new: true });
+            if (!updateUser) {
+                res.status(400).json({ message: 'Somthing wrong with the update' });
+            } else {
+                res.status(200).json({ user: updateUser });
+            }
+        }
+    } catch (err) {
+        res.status(500).json({ message: 'Something went wrong ' });
+    }
+};
+
+// * Function to delete user by ID
+const deleteUserByID = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await User.findById(id);
+        if (req.user.type !== userType.ADMIN || req.user.id === user._id.toString()) {
+            res.status(400).json({ message: 'You have to be admin and it cannot be your account' });
+        } else {
+            const deleteUser = await User.findByIdAndDelete(id);
+            if (!deleteUser) {
+                res.status(404).json({ message: 'User not found' });
+            } else {
+                res.status(200).json({ user: deleteUser });
+            }
+        }
+    } catch (err) {
+        res.status(500).json({ message: 'Something went wrong ' });
+    }
+};
+
 module.exports = {
     createUser,
     getUsers,
+    getUserByID,
+    updateUserByID,
+    deleteUserByID,
 }

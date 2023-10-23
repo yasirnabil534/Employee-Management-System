@@ -16,7 +16,7 @@ const emailLogin = async (email, password, res) => {
             if (!isValid) {
                 res.status(401).json({ message: 'Password does not match' });
             } else {
-                const accessToken = generateToken({ email, id: user._id.toString()}, '1d');
+                const accessToken = generateToken({ email, id: user._id.toString(), type: user.type}, '1d');
                 const refreshToken = generateToken({ id: user._id.toString() }, '6d');
                 res.status(200).json({ message: 'Login successfull', user, accessToken, refreshToken });
             }
