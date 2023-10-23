@@ -59,6 +59,11 @@ const login = async (req, res) => {
         } else {
             const { email, password, type } = req.body;
             if (type === loginType.EMAIL) {
+                if (!email) {
+                    res.status(404).json({ message: 'Email not found' });
+                } else if (!password) {
+                    res.status(403).json({ message: 'Password need to be provided' });
+                }
                 await emailLogin(email, password, res);
             } else if (type === loginType.REFRESH) {
                 await tokenLogin(req?.body?.refreshToken, res);
@@ -71,4 +76,4 @@ const login = async (req, res) => {
 
 module.exports = {
     login,
-}
+};

@@ -7,7 +7,8 @@ const generateToken = (params, time) => {
 
 const decriptToken = (token) => {
     try {
-        const { id } = jwt.verify(token, process.env.JWT_SECRET);
+        const data = jwt.verify(token, process.env.JWT_SECRET);
+        const { id } = data;
         return id;
     } catch (err) {
         return err;

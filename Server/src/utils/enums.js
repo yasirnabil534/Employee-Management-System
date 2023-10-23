@@ -3,6 +3,11 @@ const loginType = {
     REFRESH: 'refresh',
 }
 
+const userType = {
+    ADMIN: 'admin',
+    USER: 'user',
+}
+
 module.exports = {
     loginType,
 }
