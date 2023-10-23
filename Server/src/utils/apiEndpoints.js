@@ -5,7 +5,8 @@ const authAPI = {
 
 const userAPI = {
     CREATE: '/create',
-    GET_ALL: '/get-all',
+    ALL: '/get-all',
+    USER_BY_ID: '/user/:id',
 }
 
 module.exports = {

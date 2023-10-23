@@ -10,9 +10,6 @@ const {
 router.post(
     authAPI.LOGIN,
     [
-        body('email', 'email is required').notEmpty(),
-        body('password', 'password is required').notEmpty(),
-        body('password', 'password must be at least 6 characters long').isLength({ min: 6 }),
         body('type', 'type must be email or refresh').isIn(['email', 'refresh'])
     ],
     login
