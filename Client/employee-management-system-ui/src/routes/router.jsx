@@ -1,4 +1,4 @@
-const publicRoutes = ['/signin', '/register'];
+const publicRoutes = ['/signin', '/signup'];
 
 const baseRouter = (navigate, path) => {
   if (publicRoutes.includes(path)) {
@@ -9,6 +9,6 @@ const baseRouter = (navigate, path) => {
 };
 
 export {
-  baseRouter,
+  baseRouter
 };
 

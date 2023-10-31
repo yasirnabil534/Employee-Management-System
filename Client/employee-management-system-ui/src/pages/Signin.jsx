@@ -1,4 +1,6 @@
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -8,23 +10,32 @@ import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
-import Link from '@mui/material/Link';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { ThemeProvider } from '@mui/material/styles';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Copyright from '../components/Copyright';
 import theme from '../themes/themes';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const SignIn = () => {
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [remember, setRemember] = useState(false);
+
+  const handleSubmit = () => {
+    const userData = {
+      email,
+      password,
+      remember,
+    }
+    console.log(userData);
   };
 
   return (
@@ -38,8 +49,7 @@ const SignIn = () => {
           flexDirection: 'column',
           justifyContent: 'center',
         }
-      }
-    >
+      }>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <Card sx={{ px: 3 }}>
@@ -54,10 +64,10 @@ const SignIn = () => {
               <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                 <LockOutlinedIcon />
               </Avatar>
-              <Typography component="h1" variant="h5">
+              <Typography variant="h5">
                 Sign in
               </Typography>
-              <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+              <Box sx={{ mt: 1 }}>
                 <TextField
                   margin="normal"
                   required
@@ -67,6 +77,7 @@ const SignIn = () => {
                   name="email"
                   autoComplete="email"
                   autoFocus
+                  onChange={(event) => setEmail(event.target.value)}
                 />
                 <TextField
                   margin="normal"
@@ -74,12 +85,29 @@ const SignIn = () => {
                   fullWidth
                   name="password"
                   label="Password"
-                  type="password"
+                  type={showPassword? 'text' : 'password'}
                   id="password"
                   autoComplete="current-password"
+                  onChange={(event) => setPassword(event.target.value)}
+                  InputProps={{
+                    endAdornment: 
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={() => setShowPassword((show) => !show)}
+                          onMouseDown={(event) => {
+                            event.preventDefault();
+                          }}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    
+                  }}
                 />
                 <FormControlLabel
-                  control={<Checkbox value="remember" color="primary" />}
+                  control={<Checkbox onChange={(event) => setRemember(event.target.checked)} color="primary" />}
                   label="Remember me"
                 />
                 <Button
@@ -87,19 +115,20 @@ const SignIn = () => {
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
+                  onClick={handleSubmit}
                 >
                   Sign In
                 </Button>
                 <Grid container>
                   <Grid item xs={12}>
-                    <Link href="#" variant="body2">
+                    <Button onClick={(()=>{/* navigate('/forgetpassword') */})}>
                       Forgot password?
-                    </Link>
+                    </Button>
                   </Grid>
                   <Grid item xs={12}>
-                    <Link href="#" variant="body2">
+                    <Button onClick={()=>navigate('/signup')}>
                       {"Don't have an account? Sign Up"}
-                    </Link>
+                    </Button>
                   </Grid>
                 </Grid>
               </Box>
