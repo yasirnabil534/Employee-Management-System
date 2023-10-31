@@ -1,8 +1,24 @@
+import {Box} from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
+import { Outlet } from 'react-router-dom';
+import BaseComponent from '../components/BaseComponent';
+import theme from '../themes/themes';
+
+
 const Base = () => {
   return (
-		<>
-			<div></div>
-		</>
+		<ThemeProvider theme={theme}>
+			<Box component='div' mt={8} sx={ 
+				{ 
+					height: '93vh',
+					width: '100vw',
+					bgcolor: 'backgroundColor.main'
+				} 
+			}>
+				<BaseComponent />
+        <Outlet />
+			</Box>
+		</ThemeProvider>
 	);
 };
 
