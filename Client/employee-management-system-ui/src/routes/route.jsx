@@ -3,6 +3,7 @@ import Home from "../pages/Home";
 import Base from "../pages/Base";
 import SignIn from "../pages/signin";
 import About from "../pages/About";
+import SignUp from "../pages/Signup";
 
 const AppRoutes = () => {
 
@@ -24,6 +25,10 @@ const AppRoutes = () => {
 		{
 			path: 'signin',
 			element: <SignIn />
+		},
+		{
+			path: '/signup',
+			element: <SignUp />
 		}
 	]);
 
