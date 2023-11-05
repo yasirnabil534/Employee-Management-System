@@ -1,14 +1,11 @@
 import axios from 'axios';
 
-const getApi = (config = {}) => {
-  const api = axios.create({
-    baseUrl: 'http://localhost:3000',
-    timeout: 2000,
-    headers: config,
-  });
-  return api;
-}
+const api = axios.create({
+  baseURL: 'http://localhost:3000',
+  timeout: 2000,
+  headers: {
+    'Access-Control-Allow-Origin': '*'
+  },
+});
 
-export {
-  getApi,
-};
+export default api;
