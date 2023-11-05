@@ -1,5 +1,5 @@
-import {Box} from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
+import Box from '@mui/material/Box';
 import { Outlet } from 'react-router-dom';
 import BaseComponent from '../components/BaseComponent';
 import theme from '../themes/themes';
