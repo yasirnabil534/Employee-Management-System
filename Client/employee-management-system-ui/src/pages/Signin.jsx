@@ -18,6 +18,8 @@ import { ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Copyright from '../components/Copyright';
+import ErrorModal from '../components/errorModal';
+import { signIn } from '../services/authServices';
 import theme from '../themes/themes';
 
 // TODO remove, this demo shouldn't need to reset the theme.
@@ -28,18 +30,41 @@ const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [remember, setRemember] = useState(false);
+  const [error, setError] = useState({
+    show: false,
+    message: '',
+    title: '',
+  });
 
-  const handleSubmit = () => {
+  const resetModal = () => {
+    setError(() => ({
+      show: false,
+      message: '',
+      title: '',
+    }));
+  };
+
+  const handleSubmit = async () => {
     const userData = {
       email,
       password,
       remember,
+    };
+    const logger = await signIn(userData);
+    if (logger.isError) {
+      setError(() => ({
+        show: true,
+        title: logger.errorTitle,
+        message: logger.errorMessage,
+      }));
+    } else {
+      navigate('/home');
     }
-    console.log(userData);
   };
 
   return (
     <ThemeProvider theme={theme}>
+      <ErrorModal title={error.title} message={error.message} show={error.show} resetModal={resetModal}/>
       <Box sx={
         {
           height: '100vh',
