@@ -1,11 +1,18 @@
-import { ThemeProvider } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import { Outlet } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
+import { useEffect } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
 import BaseComponent from '../components/BaseComponent';
 import theme from '../themes/themes';
 
 
 const Base = () => {
+	const navigate = useNavigate();
+	useEffect(() => {
+		navigate('home');
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	},[]);
+
   return (
 		<ThemeProvider theme={theme}>
 			<Box component='div' mt={8} sx={ 
