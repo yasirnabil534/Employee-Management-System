@@ -15,18 +15,16 @@ import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { ThemeProvider } from '@mui/material/styles';
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Copyright from '../components/Copyright';
+import ErrorModal from '../components/errorModal';
 import { signUp } from '../services/authServices';
 import themes from '../themes/themes';
-import ErrorModal from '../components/errorModal';
-import { UserContext } from '../contexts/Contexts';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const SignUp = () => {
-  const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [firstName, setFirstName] = useState('');
@@ -65,8 +63,7 @@ const SignUp = () => {
         title: logger.errorTitle,
       }));
     } else {
-      setUser(() => (logger.user));
-      console.log(user);
+      console.log(logger.user);
       navigate('/signin');
     }
   };

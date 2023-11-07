@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import Cookies from 'js-cookie';
 import api from "../axios/Axios";
-import { authAPI } from "../utils/apiEndpoints"
+import { authAPI } from "../utils/apiEndpoints";
 
 const clearTokens = () => {
   delete api.defaults.headers.common['Authorization'];
@@ -10,13 +10,17 @@ const clearTokens = () => {
 }
 
 const hasAccess = () => {
-  return (Boolean(Cookies.get('yasirEmsAccessToken')) && Cookies.get('yasirEmsAccessToken'));
+  const accessToken = Cookies.get('yasirAccessToken');
+  const refreshToken = Cookies.get('yasirRefreshToken');
+  if (accessToken && refreshToken) {
+    const tokens = api.post(authAPI.LOGIN, { refreshToken, type: 'email' });
+  }
 }
 
 const signIn = async (params) => {
   try {
     const { data } = await api.post(authAPI.LOGIN, { ...params, type: 'email' });
-    const { accessToken, refreshToken } = data;
+    const { accessToken, refreshToken, user } = data;
     if (!accessToken || !refreshToken) {
       clearTokens();
       return {
@@ -29,7 +33,7 @@ const signIn = async (params) => {
       api.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
       Cookies.set('yasirEmsAccessToken', accessToken);
       Cookies.set('yasirEmsRefreshToken', refreshToken);
-      return { message: 'Successful login'};
+      return { message: 'Successful login', user };
     }
   } catch (err) {
     console.log(err);
@@ -67,7 +71,7 @@ const signUp = async (params) => {
 
 export {
   clearTokens,
-  hasAccess, 
+  hasAccess,
   signIn,
   signUp
 };

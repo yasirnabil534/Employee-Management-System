@@ -18,7 +18,7 @@ const Home = () => {
           Dashboard
         </Typography>
         <Box>
-          <CardComponent message='Hi! I am working' breakpoint={5} spacing={2} margin={2} />
+          <CardComponent breakpoint={5} spacing={2} margin={2} />
         </Box>
       </StyledCard>
     </>
