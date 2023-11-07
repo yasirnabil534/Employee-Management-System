@@ -1,6 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import About from "../pages/About";
 import Base from "../pages/Base";
+import Employee from "../pages/Employee";
 import Home from "../pages/Home";
 import SignUp from "../pages/Signup";
 import SignIn from "../pages/signin";
@@ -19,11 +20,15 @@ const AppRoutes = () => {
 				{
 					path: 'about',
 					element: <About />
+				},
+				{
+					path: 'employees',
+					element: <Employee />
 				}
 			],
 		},
 		{
-			path: 'signin',
+			path: '/signin',
 			element: <SignIn />
 		},
 		{
