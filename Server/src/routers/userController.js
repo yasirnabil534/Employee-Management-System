@@ -8,6 +8,7 @@ const {
     getUserByID,
     updateUserByID,
     deleteUserByID,
+    getDetailInformation,
 } = require('../services/userService');
 const { authenticateToken } = require('../middlewares/tokenAuthenticator');
 
@@ -37,5 +38,8 @@ router.put(userAPI.USER_BY_ID, authenticateToken, updateUserByID);
 
 // ? API to delete user by ID
 router.delete(userAPI.USER_BY_ID, authenticateToken, deleteUserByID);
+
+// ? API to get detail information
+router.get(userAPI.DETAIL, authenticateToken, getDetailInformation);
 
 module.exports = router;
