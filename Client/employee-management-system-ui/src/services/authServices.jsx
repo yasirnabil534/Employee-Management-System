@@ -2,18 +2,31 @@
 import Cookies from 'js-cookie';
 import api from "../axios/Axios";
 import { authAPI } from "../utils/apiEndpoints";
+import { token } from "../utils/enums";
+
+const setTokens = (accessToken, refreshToken) => {
+  api.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
+      Cookies.set(token.ACCESS, accessToken);
+      Cookies.set(token.REFRESH, refreshToken);
+}
 
 const clearTokens = () => {
   delete api.defaults.headers.common['Authorization'];
-  Cookies.remove('yasirEmsAccessToken');
-  Cookies.remove('yasirEmsRefreshToken');
+  Cookies.remove(token.ACCESS);
+  Cookies.remove(token.REFRESH);
 }
 
-const hasAccess = () => {
-  const accessToken = Cookies.get('yasirAccessToken');
-  const refreshToken = Cookies.get('yasirRefreshToken');
-  if (accessToken && refreshToken) {
-    const tokens = api.post(authAPI.LOGIN, { refreshToken, type: 'email' });
+const getAccess = async () => {
+  try {
+    const accessToken = Cookies.get(token.ACCESS);
+    const refreshToken = Cookies.get(token.REFRESH);
+    if (accessToken && refreshToken) {
+      const tokens = await api.post(authAPI.LOGIN, { refreshToken, type: 'refresh' });
+      setTokens(tokens.accessToken, tokens.refreshToken);
+      return tokens.user;
+    }
+  } catch (err) {
+    return null;
   }
 }
 
@@ -30,9 +43,7 @@ const signIn = async (params) => {
       }
     } else {
       console.log(data);
-      api.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
-      Cookies.set('yasirEmsAccessToken', accessToken);
-      Cookies.set('yasirEmsRefreshToken', refreshToken);
+      setTokens(accessToken, refreshToken);
       return { message: 'Successful login', user };
     }
   } catch (err) {
@@ -71,7 +82,7 @@ const signUp = async (params) => {
 
 export {
   clearTokens,
-  hasAccess,
+  getAccess,
   signIn,
   signUp
 };

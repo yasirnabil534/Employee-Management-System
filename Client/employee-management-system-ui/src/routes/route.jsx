@@ -5,25 +5,28 @@ import Employee from "../pages/Employee";
 import Home from "../pages/Home";
 import SignUp from "../pages/Signup";
 import SignIn from "../pages/signin";
+import SecureRoute from "./SecureRoute";
+
+const secureRouteWrapper = (element) => <SecureRoute>{element}</SecureRoute>
 
 const AppRoutes = () => {
 
   const routes = createBrowserRouter([
 		{
 			path: '/',
-			element: <Base />,
+			element: secureRouteWrapper(<Base />),
 			children: [
 				{
 					path:'home',
-					element: <Home />
+					element: secureRouteWrapper(<Home />)
 				},
 				{
 					path: 'about',
-					element: <About />
+					element: secureRouteWrapper(<About />)
 				},
 				{
 					path: 'employees',
-					element: <Employee />
+					element: secureRouteWrapper(<Employee />)
 				}
 			],
 		},
