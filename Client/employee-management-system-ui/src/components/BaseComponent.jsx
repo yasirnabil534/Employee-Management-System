@@ -1,8 +1,8 @@
 import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
@@ -16,9 +16,10 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import PropTypes from 'prop-types';
-import * as React from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import { baseRouter } from '../routes/router'
+import { UserContext } from '../contexts/Contexts';
+import { clearTokens } from '../services/authServices';
 
 const drawerWidth = 240;
 const navItems = ['Home', 'Employees', 'About'];
@@ -47,9 +48,16 @@ const ToggleButton = styled(MUIToggleButton)(() => ({
 
 function BaseComponent(props) {
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [alignment, setAlignment] = React.useState('en-us');
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [alignment, setAlignment] = useState('en-us');
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
+
+  const logout = () => {
+    clearTokens();
+    setUser(() => ({}));
+    navigate('/signin');
+  };
 
   const handleAlignment = (event, newAlignment) => {
     if (newAlignment !== null) {
@@ -84,7 +92,9 @@ function BaseComponent(props) {
         </Box>
         <Box>
           <Divider />
-          <Button variant='contained' sx={{ px: 3, py: 1, m: 3}}>Logout</Button>
+          <Button onClick={logout} variant='contained' sx={{ px: 3, py: 1, m: 3}}>
+            Logout
+          </Button>
         </Box>
       </Box>
     </Box>

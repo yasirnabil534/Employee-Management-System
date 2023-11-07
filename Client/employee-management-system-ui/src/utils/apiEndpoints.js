@@ -3,6 +3,11 @@ const authAPI = {
   SIGNUP: '/users/create',
 }
 
+const userAPI = {
+  USER: '/users/user/',
+}
+
 export {
   authAPI,
+  userAPI,
 }

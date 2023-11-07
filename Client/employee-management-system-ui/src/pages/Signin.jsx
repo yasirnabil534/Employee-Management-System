@@ -15,16 +15,18 @@ import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { ThemeProvider } from '@mui/material/styles';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Copyright from '../components/Copyright';
 import ErrorModal from '../components/errorModal';
+import { UserContext } from '../contexts/Contexts';
 import { signIn } from '../services/authServices';
 import theme from '../themes/themes';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const SignIn = () => {
+  const { setUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
@@ -58,6 +60,8 @@ const SignIn = () => {
         message: logger.errorMessage,
       }));
     } else {
+      setUser(() => (logger.user));
+      console.log('user', logger.user);
       navigate('/home');
     }
   };
