@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
@@ -18,6 +19,11 @@ const connectDB = async () => {
 };
 
 app.use(bodyParser.json());
+app.use(cors({
+    origin: `http://localhost:5173`,
+    credentials: true,
+    optionsSuccessStatus: 200,
+}));
 
 // ? API to check connection to servers
 app.get('/', (req, res) => {

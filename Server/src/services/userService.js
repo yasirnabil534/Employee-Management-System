@@ -26,7 +26,7 @@ const createUser = async (req, res) => {
             };
             const user = await new User(userObj);
             await user.save();
-            const newUser = await User.find({ email: req.body?.email });
+            const newUser = await User.findOne({ email: req.body?.email });
             if (newUser) {
                 res.status(201).json({ message: 'User created successfully', user: newUser });
             } else {
@@ -109,10 +109,30 @@ const deleteUserByID = async (req, res) => {
     }
 };
 
+// * Function to get detail information for dashboard
+const getDetailInformation = async (req, res) => {
+    try {
+        const aggregate = [];
+        aggregate.push({
+            $group: {
+                _id: null,
+                totalEmployee: { $sum: 1 },
+                averageAge: { $avg: "$age" },
+                averageSalary: { $avg: "$salary" },
+            }
+        });
+        const result = await User.aggregate(aggregate);
+        res.status(200).json({result});
+    } catch (err) {
+        res.status(500).json({ message: 'Something went wrong ' });
+    }
+};
+
 module.exports = {
     createUser,
     getUsers,
     getUserByID,
     updateUserByID,
     deleteUserByID,
+    getDetailInformation,
 }
