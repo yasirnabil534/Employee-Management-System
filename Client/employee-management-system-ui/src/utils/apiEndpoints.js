@@ -6,6 +6,7 @@ const authAPI = {
 const userAPI = {
   USER: '/users/user/',
   ALL: '/users/get-all',
+  DETAIL: '/users/dashboard-data',
 }
 
 export {

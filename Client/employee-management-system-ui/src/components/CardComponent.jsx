@@ -4,9 +4,11 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import { getDashboardData } from '../services/userService';
+import ErrorModal from './ErrorModal';
 
 const Item = styled(Card)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -18,12 +20,52 @@ const Item = styled(Card)(({ theme }) => ({
 }));
 
 const CardComponent = (props) => {
-  const [percentage] = useState(0);
-  const [avgSalary] = useState(0);
-  const [totalEmployees] = useState(0);
-  const [avgAge] = useState(0);
+  const [percentage, setPersentage] = useState(0);
+  const [avgSalary, setAvgSalary] = useState(0);
+  const [totalEmployees, setTotalEmployees] = useState(0);
+  const [avgAge, setAvgAge] = useState(0);
+  const [error, setError] = useState({
+    show: false,
+    message: '',
+    title: '',
+  });
+
+  const resetErrorModal = () => {
+    setError(() => ({
+      show: false,
+      message: '',
+      title: '',
+    }));
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const logger = await getDashboardData();
+      if (logger.isError) {
+        setError(() => ({
+          show: true,
+          title: logger.errorTitle,
+          message: logger.errorMessage,
+        }))
+      } else {
+        const { totalEmployee, averageSalary, averageAge } = logger;
+        setAvgSalary(() => (averageSalary));
+        setTotalEmployees(() => (totalEmployee));
+        setAvgAge(() => (averageAge));
+        setPersentage(() => (averageSalary));
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <>
+      <ErrorModal 
+        title={error.title} 
+        message={error.message} 
+        show={error.show} 
+        resetModal={resetErrorModal}
+      />
       <Grid container sx={{ m: props.margin }}>
         <Grid container item xs={props.breakpoint} sx={{ bgcolor: 'white.main', boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.1)' }}>
           <Grid container>

@@ -15,7 +15,7 @@ import {
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { editUser } from '../services/userService';
-import { userType, showUserType} from '../utils/enums';
+import { showUserType, userType } from '../utils/enums';
 
 const EditModal = (props) => {
   const [open, setOpen] = useState(false);
@@ -26,6 +26,7 @@ const EditModal = (props) => {
   const [ address, setAddress] = useState('');
   const [ age, setAge] = useState(0);
   const [ position, setPosition] = useState('');
+  const [ salary, setSalary] = useState(0);
   const [type, setType] = useState(userType.USER);
 
   useEffect(() => {
@@ -38,6 +39,7 @@ const EditModal = (props) => {
       setPhone(() => (props.phone));
       setAddress(() => (props.address));
       setPosition(() => (props.position));
+      setSalary(() => (props.salary));
       setType(() => (props.type));
     }
   }, [props.open]);
@@ -50,6 +52,7 @@ const EditModal = (props) => {
       phone,
       address,
       position,
+      salary,
       age,
       type,
     }
@@ -70,8 +73,11 @@ const EditModal = (props) => {
     setFirstName(() => (''));
     setLastName(() => (''));
     setEmail(() => (''));
+    setAge(() => (0));
     setPhone(() => (''));
     setAddress(() => (''));
+    setPosition(() => (''));
+    setSalary(() => (0));
     setType(() => (''));
   };
 
@@ -170,7 +176,19 @@ const EditModal = (props) => {
                       name="position"
                       autoComplete="position"
                       defaultValue={position}
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e) => setPosition(e.target.value)}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
+                      id="salary"
+                      label="Salary"
+                      name="salary"
+                      autoComplete="salary"
+                      defaultValue={salary}
+                      onChange={(e) => setSalary(e.target.value)}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -202,7 +220,7 @@ const EditModal = (props) => {
                       <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={type}
+                        value={showUserType[type]}
                         label="user Type"
                         onChange={(e) => (setType(e.target.value))}
                       >
