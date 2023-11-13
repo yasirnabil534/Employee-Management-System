@@ -122,7 +122,7 @@ const getDetailInformation = async (req, res) => {
             }
         });
         const result = await User.aggregate(aggregate);
-        res.status(200).json({result});
+        res.status(200).json({ result: result[0] });
     } catch (err) {
         res.status(500).json({ message: 'Something went wrong ' });
     }
