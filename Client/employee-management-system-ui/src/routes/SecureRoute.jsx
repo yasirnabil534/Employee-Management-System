@@ -7,20 +7,21 @@ const SecureRoute = ({ children }) => {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
 	useEffect(() => {
+    console.log('rendering secure route');
     if (Object.keys(user).length === 0) {
-      const checkAuth = async () => {
-        const user = await getAccess();
-        if (!user) {
+      const checkAuth = async () => { 
+        const currentUser = await getAccess();
+        if (!currentUser) {
           navigate('/signin');
         } else {
-          setUser(() => (user));
+          setUser(() => ({...currentUser}));
+          console.log('check', user);
         }
       };
       checkAuth();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, navigate]);
-
+  }, [user]);
   return children;
 };
 
