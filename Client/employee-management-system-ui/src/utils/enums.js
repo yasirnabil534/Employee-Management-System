@@ -3,6 +3,18 @@ const token = {
   REFRESH: 'yasirEmsRefreshToken',
 }
 
+const userType = {
+  ADMIN: 'admin',
+  USER: 'user',
+}
+
+const showUserType = {
+  'admin': 'Admin',
+  'user': 'User',
+}
+
 export {
-  token
+  token,
+  userType,
+  showUserType,
 }

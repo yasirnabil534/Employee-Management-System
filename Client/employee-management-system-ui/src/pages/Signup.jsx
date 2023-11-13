@@ -18,7 +18,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Copyright from '../components/Copyright';
-import ErrorModal from '../components/errorModal';
+import ErrorModal from '../components/ErrorModal';
 import { signUp } from '../services/authServices';
 import themes from '../themes/themes';
 

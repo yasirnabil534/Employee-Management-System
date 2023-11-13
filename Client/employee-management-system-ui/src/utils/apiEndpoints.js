@@ -5,9 +5,11 @@ const authAPI = {
 
 const userAPI = {
   USER: '/users/user/',
+  ALL: '/users/get-all',
 }
 
 export {
   authAPI,
-  userAPI,
+  userAPI
 }
+

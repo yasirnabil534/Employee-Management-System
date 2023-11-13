@@ -8,18 +8,32 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useEffect, useState } from 'react';
 
-const ErrorModal = (props) => {
+const ConfirmationModal = (props) => {
   const [open, setOpen] = useState(false);
   const [info, setInfo] = useState({
     message: '',
     title: '',
+    okButton: 'Ok',
+    cancelButton: 'Close',
+    okFunction: null,
   });
+  
+  useEffect(() => {
+    console.log('Rendering Confirmation Modal');
+    if (props.show) {
+      handleOpen();
+    } else {
+      handleClose();
+    }
+  }, [props.show]);
 
-  const handleClickOpen = () => {
+  const handleOpen = () => {
     setInfo(() => ({
       title: props.title,
       message: props.message,
-      method: null,
+      okButton: props.okButton,
+      okFunction: props.okFunction ?? handleClose,
+      cancelButton: props.cancelButton,
     }));
     setOpen(true);
   };
@@ -29,47 +43,31 @@ const ErrorModal = (props) => {
     setOpen(false);
   };
 
-  useEffect(() => {
-    console.log('rendering error modal');
-    if (props.show) {
-      handleClickOpen();
-    }
-  }, [props.show])
-
   return (
     <>
-      {/* <Button variant="outlined" onClick={handleClickOpen}>
-        Open alert dialog
-      </Button> */}
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        sx={{ border: '1px solid red' }}
       >
         <DialogTitle id="alert-dialog-title">
           {info.title}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            {info.message}
+            {info.messsage}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => {
-            if(!info.method) {
-              handleClose();
-            } else {
-              props.method();
-            }
-          }} autoFocus>
-            Close
+          <Button onClick={handleClose}>{info.cancelButton ?? 'Close'}</Button>
+          <Button onClick={info.okFunction} autoFocus>
+            {info.okButton ?? 'Ok'}
           </Button>
         </DialogActions>
       </Dialog>
     </>
   );
-}
+};
 
-export default ErrorModal;
+export default ConfirmationModal;
