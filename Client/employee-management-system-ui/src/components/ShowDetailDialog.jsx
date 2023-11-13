@@ -98,6 +98,7 @@ const ShowDetailDialog = (props) => {
   };
 
   const setChanges = () => {
+    resetShowEditModal();
     resetModal();
     props.setChanges();
   }
@@ -105,7 +106,7 @@ const ShowDetailDialog = (props) => {
   const [showEditModal, setShowEditModal] = useState(false);
 
   const resetShowEditModal = () => {
-    setShowEditModal(false);
+    setShowEditModal(() => false);
   };
 
   useEffect(() => {

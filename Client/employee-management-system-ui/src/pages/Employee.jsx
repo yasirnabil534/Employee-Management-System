@@ -3,9 +3,9 @@ import { Button } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
 import ErrorModal from '../components/ErrorModal';
 import ShowDetailDialog from '../components/ShowDetailDialog';
+import UserTable from '../components/UserTable';
 import { UserContext } from '../contexts/Contexts';
 import { getUsers } from '../services/userService';
-import UserTable from '../components/UserTable';
 
 const Employee = () => {
   const [columns, setColumns] = useState([
@@ -46,6 +46,10 @@ const Employee = () => {
     message: '',
     show: false,
   });
+
+  const resetChanges = () => {
+    setChanges(() => (!changes));
+  }
 
   const resetError = () => {
     setError(() => ({
@@ -133,9 +137,9 @@ const Employee = () => {
         data={modalData.data}
         open={modalData.open}
         resetModal={resetModal}
-        setChanges={setChanges}
+        setChanges={resetChanges}
       />
-      <UserTable rows={rows} columns={columns} setError={setError} />
+      <UserTable rows={rows} columns={columns} setError={setError} changes={changes} />
     </>
   );
 };
