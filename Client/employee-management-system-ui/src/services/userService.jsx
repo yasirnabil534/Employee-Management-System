@@ -79,7 +79,7 @@ const getDashboardData = async () => {
       }
     } else {
       const { result } = data;
-      return result[0];
+      return result;
     }
   } catch (err) {
     const message = err?.response?.data?.message ?? 'Something went wrong. Please try again after some time.';

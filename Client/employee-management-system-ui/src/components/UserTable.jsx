@@ -22,7 +22,7 @@ const UserTable = (props) => {
   useEffect(() => {
     setColumns(() => (props.columns));
     setRows(() => (props.rows));
-  }, [props.columns, props.rows]);
+  }, [props.columns, props.rows, props.changes]);
 
   return (
     <>

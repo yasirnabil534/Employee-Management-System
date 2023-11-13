@@ -49,10 +49,10 @@ const CardComponent = (props) => {
         }))
       } else {
         const { totalEmployee, averageSalary, averageAge } = logger;
-        setAvgSalary(() => (averageSalary));
+        setAvgSalary(() => (averageSalary.toFixed(2)));
         setTotalEmployees(() => (totalEmployee));
-        setAvgAge(() => (averageAge));
-        setPersentage(() => (averageSalary));
+        setAvgAge(() => (averageAge.toFixed(2)));
+        setPersentage(() => (72.5));
       }
     };
     fetchData();

@@ -90,6 +90,7 @@ const EditModal = (props) => {
   const doneEdit = () => {
     props.setChanges();
     resetModal();
+    setOpen(() => (false));
   }
 
   return (
@@ -220,7 +221,7 @@ const EditModal = (props) => {
                       <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
-                        value={showUserType[type]}
+                        value={type}
                         label="user Type"
                         onChange={(e) => (setType(e.target.value))}
                       >
