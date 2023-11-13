@@ -1,15 +1,19 @@
 import Box from '@mui/material/Box';
 import { ThemeProvider } from '@mui/material/styles';
 import { useEffect } from 'react';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import BaseComponent from '../components/BaseComponent';
 import theme from '../themes/themes';
 
 
 const Base = () => {
 	const navigate = useNavigate();
+	const location = useLocation();
 	useEffect(() => {
-		navigate('home');
+		console.log('rendering base')
+		if (location.pathname === '/') {
+			navigate('home');
+		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	},[]);
 

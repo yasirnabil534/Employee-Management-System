@@ -18,7 +18,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Copyright from '../components/Copyright';
-import ErrorModal from '../components/errorModal';
+import ErrorModal from '../components/ErrorModal';
 import { UserContext } from '../contexts/Contexts';
 import { signIn } from '../services/authServices';
 import theme from '../themes/themes';
@@ -61,7 +61,6 @@ const SignIn = () => {
       }));
     } else {
       setUser(() => (logger.user));
-      console.log('user', logger.user);
       navigate('/home');
     }
   };
@@ -105,7 +104,6 @@ const SignIn = () => {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                  autoFocus
                   onChange={(event) => setEmail(event.target.value)}
                 />
                 <TextField

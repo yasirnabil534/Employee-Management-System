@@ -3,7 +3,7 @@ import { useState } from 'react';
 import './App.css';
 import AppRoutes from './routes/route';
 import { UserContext } from './contexts/Contexts';
-import ErrorModal from './components/errorModal';
+// import ErrorModal from './components/errorModal';
 
 function App() {
   const [user, setUser] = useState({});

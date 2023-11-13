@@ -21,9 +21,12 @@ const getAccess = async () => {
     const accessToken = Cookies.get(token.ACCESS);
     const refreshToken = Cookies.get(token.REFRESH);
     if (accessToken && refreshToken) {
+      api.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
       const tokens = await api.post(authAPI.LOGIN, { refreshToken, type: 'refresh' });
-      setTokens(tokens.accessToken, tokens.refreshToken);
-      return tokens.user;
+      setTokens(tokens.data.accessToken, tokens.data.refreshToken);
+      return tokens.data.user;
+    } else {
+      return null;
     }
   } catch (err) {
     return null;
@@ -35,19 +38,16 @@ const signIn = async (params) => {
     const { data } = await api.post(authAPI.LOGIN, { ...params, type: 'email' });
     const { accessToken, refreshToken, user } = data;
     if (!accessToken || !refreshToken) {
-      clearTokens();
       return {
         isError: true,
         errorTitle: 'Token not found', 
         errorMessage: 'Featching access token got some problem',
       }
     } else {
-      console.log(data);
       setTokens(accessToken, refreshToken);
       return { message: 'Successful login', user };
     }
   } catch (err) {
-    console.log(err);
     const message = err?.response?.data?.message ?? 'Something went wrong. Please try again after some time.';
     return {
       isError: true,
@@ -67,7 +67,6 @@ const signUp = async (params) => {
         errorMessage: 'User could not be registered. Please try again.',
       }
     } else {
-      console.log('data', data);
       return { message: 'Successful registration', user: data.user };
     }
   } catch (err) {
