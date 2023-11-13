@@ -68,6 +68,31 @@ const deleteUser = async (id) => {
   }
 };
 
-export {
-  deleteUser, editUser, getUsers
+const getDashboardData = async () => {
+  try {
+    const { data } = await api.get(userAPI.DETAIL);
+    if (!data) {
+      return {
+        isError: true,
+        errorTitle: 'Dashboard data error!!', 
+        errorMessage: 'Daashboard data cannot be get.',
+      }
+    } else {
+      const { result } = data;
+      return result[0];
+    }
+  } catch (err) {
+    const message = err?.response?.data?.message ?? 'Something went wrong. Please try again after some time.';
+    return {
+      isError: true,
+      errorTitle: 'Error!!', 
+      errorMessage: message,
+    }
+  }
 };
+
+export {
+  deleteUser,
+  editUser, getDashboardData, getUsers
+};
+

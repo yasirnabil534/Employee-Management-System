@@ -38,6 +38,7 @@ const ShowDetailDialog = (props) => {
       email: '',
       age: 0,
       position: '',
+      salary: '',
       phone: '',
       address: '',
       type: '',
@@ -158,6 +159,7 @@ const ShowDetailDialog = (props) => {
         email={modalData.data.email}
         address={modalData.data.address}
         position={modalData.data.position}
+        salary={modalData.data.salary}
         type={modalData.data.type}
         setChanges={setChanges}
         resetShowEditModal={resetShowEditModal}
@@ -188,6 +190,9 @@ const ShowDetailDialog = (props) => {
               </Typography>
               <Typography variant='h6' component='h2'>
                 Position: {`${modalData.data.position}`}
+              </Typography>
+              <Typography variant='h6' component='h2'>
+                Salary: {`${modalData.data.salary}`}
               </Typography>
               <Typography variant='h6' component='h2'>
                 Phone No.: {`${modalData.data.phone}`}
