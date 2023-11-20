@@ -1,4 +1,5 @@
 import MenuIcon from '@mui/icons-material/Menu';
+import { Avatar } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -22,7 +23,7 @@ import { UserContext } from '../contexts/Contexts';
 import { clearTokens } from '../services/authServices';
 
 const drawerWidth = 240;
-const navItems = ['Home', 'Employees', 'About'];
+const navItems = ['Home', 'Employees', 'Profile', 'About'];
 
 const ToggleButtonGroup = styled(MUIToggleButtonGroup)(({ theme }) => ({
   '& .MuiToggleButtonGroup-grouped': {
@@ -107,14 +108,22 @@ function BaseComponent(props) {
       <CssBaseline />
       <AppBar component="nav">
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-          >
-            <MenuIcon />
-          </IconButton>
+          <Box sx={{display: 'flex'}}>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Avatar
+              sx={{mx: 1, cursor: 'pointer'}}
+              src="/src/assets/images/logo_ems3.jpeg"
+              alt="Logo"
+              onClick={ () => {navigate('/home')} }
+            />
+          </Box>
           <Typography
             variant="h6"
             component="div"

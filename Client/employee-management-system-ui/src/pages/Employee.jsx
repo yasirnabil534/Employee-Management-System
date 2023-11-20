@@ -123,7 +123,7 @@ const Employee = () => {
       }
     }
     fetchData();
-  },[changes]);
+  },[changes, user]);
 
   return (
     <>
