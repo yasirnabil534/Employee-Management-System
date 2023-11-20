@@ -118,7 +118,7 @@ const ShowDetailDialog = (props) => {
       }));
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.open]);
+  }, [props.open, user]);
 
   // eslint-disable-next-line react/prop-types
   const RenderOptions = ({ user, show }) => {

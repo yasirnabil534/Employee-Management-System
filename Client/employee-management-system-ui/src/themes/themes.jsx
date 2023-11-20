@@ -29,7 +29,6 @@ const white = {
 
 const backgroundColor = {
   main: '#d7ccc8',
-  // main: '#dd2c00',
 };
 
 const theme = createTheme({

@@ -3,6 +3,7 @@ import About from "../pages/About";
 import Base from "../pages/Base";
 import Employee from "../pages/Employee";
 import Home from "../pages/Home";
+import Profile from "../pages/Profile";
 import SignUp from "../pages/Signup";
 import SignIn from "../pages/signin";
 import SecureRoute from "./SecureRoute";
@@ -27,6 +28,10 @@ const AppRoutes = () => {
 				{
 					path: 'employees',
 					element: secureRouteWrapper(<Employee />)
+				},
+				{
+					path: 'profile',
+					element: secureRouteWrapper(<Profile />)
 				}
 			],
 		},

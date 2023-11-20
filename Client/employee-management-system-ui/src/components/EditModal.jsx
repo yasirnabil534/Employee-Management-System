@@ -26,6 +26,7 @@ const EditModal = (props) => {
   const [ address, setAddress] = useState('');
   const [ age, setAge] = useState(0);
   const [ position, setPosition] = useState('');
+  const [ department, setDepartment] = useState('');
   const [ salary, setSalary] = useState(0);
   const [type, setType] = useState(userType.USER);
 
@@ -39,6 +40,7 @@ const EditModal = (props) => {
       setPhone(() => (props.phone));
       setAddress(() => (props.address));
       setPosition(() => (props.position));
+      setDepartment(() => (props.department));
       setSalary(() => (props.salary));
       setType(() => (props.type));
     }
@@ -52,6 +54,7 @@ const EditModal = (props) => {
       phone,
       address,
       position,
+      department,
       salary,
       age,
       type,
@@ -166,6 +169,18 @@ const EditModal = (props) => {
                       name="phone"
                       defaultValue={phone}
                       onChange={(e) => setPhone(e.target.value)}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      fullWidth
+                      id="department"
+                      label="Department"
+                      name="department"
+                      autoComplete="department"
+                      defaultValue={department}
+                      onChange={(e) => setPosition(e.target.value)}
                     />
                   </Grid>
                   <Grid item xs={12}>
