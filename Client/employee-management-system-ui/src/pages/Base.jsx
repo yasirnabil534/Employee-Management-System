@@ -10,7 +10,6 @@ const Base = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	useEffect(() => {
-		console.log('rendering base')
 		if (location.pathname === '/') {
 			navigate('home');
 		}
