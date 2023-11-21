@@ -128,6 +128,29 @@ const getDetailInformation = async (req, res) => {
     }
 };
 
+// * Function to get last five recuted employee
+const getLastFiveRecrutedEmployee = async (req, res) => {
+    try {
+        const aggregate = [];
+        aggregate.push({
+            $sort: {
+                createdAt: -1
+            }
+        });
+        aggregate.push({
+            $limit: 5
+        });
+        const result = await User.aggregate(aggregate);
+        if (!result) {
+            res.status(404).json({ message: 'not found' });
+        } else {
+            res.status(200).json({ result });
+        }
+    } catch (err) {
+        res.status(500).json({ message: 'Something went wrong' });
+    }
+};
+
 module.exports = {
     createUser,
     getUsers,
@@ -135,4 +158,5 @@ module.exports = {
     updateUserByID,
     deleteUserByID,
     getDetailInformation,
+    getLastFiveRecrutedEmployee,
 }
