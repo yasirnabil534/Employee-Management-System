@@ -8,6 +8,7 @@ const userSchema = mongoose.Schema(
         password: String,
         rawPassword: String, // It is kept cause it is hard to remember multiple random passwords
         age: Number,
+        department: String,
         position: String,
         salary: {
             type: Number,

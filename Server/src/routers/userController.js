@@ -9,6 +9,7 @@ const {
     updateUserByID,
     deleteUserByID,
     getDetailInformation,
+    getLastFiveRecrutedEmployee,
 } = require('../services/userService');
 const { authenticateToken } = require('../middlewares/tokenAuthenticator');
 
@@ -41,5 +42,8 @@ router.delete(userAPI.USER_BY_ID, authenticateToken, deleteUserByID);
 
 // ? API to get detail information
 router.get(userAPI.DETAIL, authenticateToken, getDetailInformation);
+
+// ? API to get last five recruted employee
+router.get(userAPI.GET_LATEST, authenticateToken, getLastFiveRecrutedEmployee);
 
 module.exports = router;
