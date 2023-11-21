@@ -8,6 +8,7 @@ const userAPI = {
     ALL: '/get-all',
     USER_BY_ID: '/user/:id',
     DETAIL: '/dashboard-data',
+    GET_LATEST: '/get-latest',
 }
 
 module.exports = {
