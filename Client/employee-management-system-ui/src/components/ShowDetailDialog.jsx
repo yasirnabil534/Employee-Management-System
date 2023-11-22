@@ -13,10 +13,10 @@ import {
 import { styled } from '@mui/material/styles';
 import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../contexts/Contexts';
-import DeleteUser from './DeleteUser';
-import ErrorModal from './ErrorModal';
-import EditModal from './EditModal';
 import { showUserType } from '../utils/enums';
+import DeleteUser from './DeleteUser';
+import EditModal from './EditModal';
+import ErrorModal from './ErrorModal';
 
 const StyledCard = styled(Card)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2007' : '#f5ffff',
@@ -38,6 +38,7 @@ const ShowDetailDialog = (props) => {
       email: '',
       age: 0,
       position: '',
+      department: '',
       salary: '',
       phone: '',
       address: '',
@@ -56,6 +57,7 @@ const ShowDetailDialog = (props) => {
           email: '',
           age: 0,
           position: '',
+          department: '',
           phone: '',
           address: '',
           type: '',
@@ -110,7 +112,6 @@ const ShowDetailDialog = (props) => {
   };
 
   useEffect(() => {
-    console.log('rendering show detail dialog modal')
     if (props.open) {
       setModalData(() => ({
         open: props.open,
@@ -160,6 +161,7 @@ const ShowDetailDialog = (props) => {
         email={modalData.data.email}
         address={modalData.data.address}
         position={modalData.data.position}
+        department={modalData.data.department}
         salary={modalData.data.salary}
         type={modalData.data.type}
         setChanges={setChanges}
@@ -188,6 +190,9 @@ const ShowDetailDialog = (props) => {
               </Typography>
               <Typography variant='h6' component='h2'>
                 Age: {`${modalData.data.age}`}
+              </Typography>
+              <Typography variant='h6' component='h2'>
+                Department: {`${modalData.data.department}`}
               </Typography>
               <Typography variant='h6' component='h2'>
                 Position: {`${modalData.data.position}`}

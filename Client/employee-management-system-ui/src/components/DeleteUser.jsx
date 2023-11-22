@@ -30,7 +30,6 @@ const DeleteUser = (props) => {
   };
 
   useEffect(() => {
-    console.log('Rendering delete user modal');
     if (props.show) {
       setDeleteModal(() => (
         {

@@ -2,6 +2,7 @@
 import {
   Box,
   Card,
+  Typography,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { DataGrid } from '@mui/x-data-grid';
@@ -22,12 +23,25 @@ const UserTable = (props) => {
   useEffect(() => {
     setColumns(() => (props.columns));
     setRows(() => (props.rows));
-  }, [props.columns, props.rows, props.changes]);
+  }, [props.columns, props.rows]);
 
   return (
     <>
       <StyledTable>
         <Box sx={{ width: '100%' }}>
+          <Typography
+              sx={{
+                bgcolor: '#68a8fc',
+                height: '50px',
+                color: 'white.main',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+              }}
+              variant='h6'
+            >
+              Employees List
+            </Typography>
           <DataGrid
             rows={rows}
             columns={columns}
@@ -41,7 +55,7 @@ const UserTable = (props) => {
             pageSizeOptions={[5, 10, 20]}
             checkboxSelection
             disableRowSelectionOnClick
-            getRowId={(row) => row._id}
+            getRowId={(row) => row.sl}
           />
         </Box>
       </StyledTable>
