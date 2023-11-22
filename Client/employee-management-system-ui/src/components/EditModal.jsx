@@ -67,7 +67,6 @@ const EditModal = (props) => {
         title: logger.errorTitle,
       }));
     } else {
-      console.log(logger.user);
       doneEdit();
     }
   };
@@ -78,6 +77,7 @@ const EditModal = (props) => {
     setEmail(() => (''));
     setAge(() => (0));
     setPhone(() => (''));
+    setDepartment(() => (''));
     setAddress(() => (''));
     setPosition(() => (''));
     setSalary(() => (0));
@@ -180,7 +180,7 @@ const EditModal = (props) => {
                       name="department"
                       autoComplete="department"
                       defaultValue={department}
-                      onChange={(e) => setPosition(e.target.value)}
+                      onChange={(e) => setDepartment(e.target.value)}
                     />
                   </Grid>
                   <Grid item xs={12}>

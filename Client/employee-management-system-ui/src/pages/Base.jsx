@@ -22,7 +22,8 @@ const Base = () => {
 				{ 
 					height: '93vh',
 					width: '100vw',
-					bgcolor: 'backgroundColor.main'
+					bgcolor: 'backgroundColor.main',
+					overflowY: 'auto'
 				} 
 			}>
 				<BaseComponent />

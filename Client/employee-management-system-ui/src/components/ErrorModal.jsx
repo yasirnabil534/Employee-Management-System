@@ -30,7 +30,6 @@ const ErrorModal = (props) => {
   };
 
   useEffect(() => {
-    console.log('rendering error modal');
     if (props.show) {
       handleClickOpen();
     }
