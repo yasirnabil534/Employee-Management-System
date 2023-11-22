@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Button } from '@mui/material';
 import { useContext, useEffect, useState } from 'react';
+import { DateTime } from "luxon";
 import ErrorModal from '../components/ErrorModal';
 import ShowDetailDialog from '../components/ShowDetailDialog';
 import UserTable from '../components/UserTable';
+import LatestEmployee from '../components/LatestEmployee';
 import { UserContext } from '../contexts/Contexts';
-import { getUsers } from '../services/userService';
+import { getUsers, getLatestEmployee } from '../services/userService';
 
 const Employee = () => {
   const [columns, setColumns] = useState([
@@ -31,14 +33,26 @@ const Employee = () => {
       width: 110,
     },
     {
+      field: 'department',
+      headerName: 'Department',
+      width: 250,
+    },
+    {
       field: 'position',
       headerName: 'Position',
       width: 250,
       sortable: true,
     },
+    {
+      field: 'createdAt',
+      headerName: 'Joining Date',
+      width: 250,
+      valueGetter: (params) => `${DateTime.fromISO(params.row.createdAt).toLocaleString(DateTime.DATE_FULL)}`,
+    },
   ]);
   // eslint-disable-next-line no-unused-vars
   const [rows, setRows] = useState([]);
+  const [latestEmployeeRows, setLatestEmployeeRows] = useState([]);
   const [changes, setChanges] = useState(false);
   const { user } = useContext(UserContext);
   const [error, setError] = useState({
@@ -88,12 +102,11 @@ const Employee = () => {
       }
     ));
   };
-  let ignore = false;
 
   useEffect(() => {
-    console.log('rendering employee');
     const fetchData = async () => {
       const users = await getUsers();
+      const latestEmployees = await getLatestEmployee();
       if (users.isError) {
         setError(() => ({
           title: users.errorTitle,
@@ -103,7 +116,7 @@ const Employee = () => {
       } else {
         users.forEach((item, index) => {item.sl = index + 1});
         setRows(() => (users));
-        if (!ignore && Object.keys(user).length > 0 && user.type === 'admin' && columns.length <= 5) {
+        if (Object.keys(user).length > 0 && user.type === 'admin' && !(Object.keys(columns).some((item) => item.field === 'detail'))) {
           setColumns((initColumns) => [...initColumns, {
             field: 'detail',
             headerName: 'Detail',
@@ -118,8 +131,8 @@ const Employee = () => {
               }}>Click to see Details</Button>
             ),
           }]);
-          ignore = true;
         }
+        setLatestEmployeeRows(() => latestEmployees);
       }
     }
     fetchData();
@@ -139,7 +152,8 @@ const Employee = () => {
         resetModal={resetModal}
         setChanges={resetChanges}
       />
-      <UserTable rows={rows} columns={columns} setError={setError} changes={changes} />
+      <UserTable rows={rows} columns={columns} />
+      <LatestEmployee rows={latestEmployeeRows} />
     </>
   );
 };

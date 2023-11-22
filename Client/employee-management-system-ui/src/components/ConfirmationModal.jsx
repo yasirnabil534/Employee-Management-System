@@ -19,7 +19,6 @@ const ConfirmationModal = (props) => {
   });
   
   useEffect(() => {
-    console.log('Rendering Confirmation Modal');
     if (props.show) {
       handleOpen();
     } else {

@@ -7,7 +7,6 @@ const SecureRoute = ({ children }) => {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
 	useEffect(() => {
-    console.log('rendering secure route');
     if (Object.keys(user).length === 0) {
       const checkAuth = async () => { 
         const currentUser = await getAccess();
@@ -15,7 +14,6 @@ const SecureRoute = ({ children }) => {
           navigate('/signin');
         } else {
           setUser(() => ({...currentUser}));
-          console.log('check', user);
         }
       };
       checkAuth();

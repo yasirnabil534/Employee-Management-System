@@ -63,7 +63,6 @@ const SignUp = () => {
         title: logger.errorTitle,
       }));
     } else {
-      console.log(logger.user);
       navigate('/signin');
     }
   };

@@ -91,8 +91,34 @@ const getDashboardData = async () => {
   }
 };
 
+const getLatestEmployee = async () => {
+  try {
+    const {data} = await api.get(userAPI.ALL);
+    if (!data) {
+      return {
+        isError: true,
+        errorTitle: 'Dashboard data error!!', 
+        errorMessage: 'Daashboard data cannot be get.',
+      }
+    } else {
+      const { users } = data;
+      return users;
+    }
+  } catch (err) {
+    const message = err?.response?.data?.message ?? 'Something went wrong. Please try again after some time.';
+    return {
+      isError: true,
+      errorTitle: 'Error!!', 
+      errorMessage: message,
+    }
+  }
+}
+
 export {
   deleteUser,
-  editUser, getDashboardData, getUsers
+  editUser,
+  getDashboardData,
+  getUsers,
+  getLatestEmployee,
 };
 
