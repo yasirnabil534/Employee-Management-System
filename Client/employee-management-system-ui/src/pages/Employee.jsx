@@ -116,7 +116,7 @@ const Employee = () => {
       } else {
         users.forEach((item, index) => {item.sl = index + 1});
         setRows(() => (users));
-        if (Object.keys(user).length > 0 && user.type === 'admin' && !(Object.keys(columns).some((item) => item.field === 'detail'))) {
+        if (Object.keys(user).length > 0 && user.type === 'admin' && !(columns.some((item) => item.field === 'detail'))) {
           setColumns((initColumns) => [...initColumns, {
             field: 'detail',
             headerName: 'Detail',
