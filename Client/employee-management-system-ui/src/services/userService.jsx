@@ -1,8 +1,19 @@
+import Cookies from 'js-cookie';
 import api from '../axios/Axios';
 import { userAPI } from '../utils/apiEndpoints';
+import { token } from "../utils/enums";
+
+const setHeader = () => {
+  const accessToken = Cookies.get(token.ACCESS);
+  const refreshToken = Cookies.get(token.REFRESH);
+  if (accessToken && refreshToken) {
+    api.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
+  }
+};
 
 const getUsers = async () => {
   try {
+    setHeader();
     const {data} = await api.get(userAPI.ALL);
     const {users} = data;
     if (!users) {
@@ -26,6 +37,7 @@ const getUsers = async () => {
 
 const editUser = async (id, changes) => {
   try {
+    setHeader();
     const editedUser = await api.put(userAPI.USER + id, changes);
     if (!editedUser) {
       return {
@@ -48,6 +60,7 @@ const editUser = async (id, changes) => {
 
 const deleteUser = async (id) => {
   try {
+    setHeader();
     const user = await api.delete(userAPI.USER + id);
     if (!user) {
       return {
@@ -70,6 +83,7 @@ const deleteUser = async (id) => {
 
 const getDashboardData = async () => {
   try {
+    setHeader();
     const { data } = await api.get(userAPI.DETAIL);
     if (!data) {
       return {
@@ -93,6 +107,7 @@ const getDashboardData = async () => {
 
 const getLatestEmployee = async () => {
   try {
+    setHeader();
     const {data} = await api.get(userAPI.ALL);
     if (!data) {
       return {
@@ -117,8 +132,6 @@ const getLatestEmployee = async () => {
 export {
   deleteUser,
   editUser,
-  getDashboardData,
-  getUsers,
-  getLatestEmployee,
+  getDashboardData, getLatestEmployee, getUsers
 };
 
