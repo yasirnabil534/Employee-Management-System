@@ -63,8 +63,9 @@ const login = async (req, res) => {
                     res.status(404).json({ message: 'Email not found' });
                 } else if (!password) {
                     res.status(403).json({ message: 'Password need to be provided' });
+                } else {
+                    await emailLogin(email, password, res);
                 }
-                await emailLogin(email, password, res);
             } else if (type === loginType.REFRESH) {
                 await tokenLogin(req?.body?.refreshToken, res);
             }
